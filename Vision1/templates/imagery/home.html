@@ -1,0 +1,191 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+{% block content %}
+<div class="container text-center">
+    <div id="alert-box"></div>
+    <div class="row ">
+        <div class="col-5 card " >
+            <div class="text-center mt-1"><img src="{% static 'images/user1.png' %}" width="100" height="100" ></div>
+            <h4>Chiffrement</h4>
+            <div class="card-body">
+                <h5 class="card-title"></h5>
+                <form id="p-form" autocomplete="off" novalidate>
+                    {% csrf_token %}
+                    <div class="row text-center m-3 p-1" style="border: 0.5px #F0f0ff solid; background-image: linear-gradient(to right,#380036,#0CBABA); border-radius: 5px;
+                    color: #fff;"><h5>Image Source</h5></div>
+                    <div class="row mt-3 p-1" style="border: 0.5px #F0f0ff solid;">
+                        <div class="col-4"><label >Image source :</label></div>
+                    <div class="col-8">
+                        {%if Chiffrement_form.is_bound%}
+                            {%if Chiffrement_form.image_source.errors%}
+                            {% render_field Chiffrement_form.image_source class="form-control is-invalid" %}
+                                {%for error in Chiffrement_form.image_source.errors%}
+                                <div class="invalid-feedback">{{error}}</div>
+                                {%endfor%}
+                            {%else%}
+                        {% render_field Chiffrement_form.image_source class="form-control is-valid" %}
+                            {%endif%}
+                        {%else%}
+                        {% render_field Chiffrement_form.image_source class="form-control" onchange="readURL(this);" %}
+                        {%endif%}
+                    </div>
+                    </div>
+                    <div class="row p-2">
+                        <div id="img-box"></div>
+                    
+                    </div>
+                    <div class=" mt-1 mb-3 p-2" id="btn-box">
+                        <button type="submit" class="btn btn-primary p-2 " data-filter="taille_source" style="background-image: linear-gradient(to right,#F53844,#42378F); border-radius: 12px;
+                        color: #fff;"">Taille</button>
+                    </div>
+                    <div class="invisible-taille-source" id="source-size-box">
+                    <div class="row text-center mt-1"><h6>Resize L'image</h6> </div>
+                    <div class="row p-1" style="border: 0.5px #F0f0ff solid;">
+                        <div class="col-3"><label >Height :</label></div>
+                    <div class="col-3">
+                        {%if Chiffrement_form.is_bound%}
+                            {%if Chiffrement_form.height_source.errors%}
+                            {% render_field Chiffrement_form.height_source class="form-control is-invalid" %}
+                                {%for error in Chiffrement_form.height_source.errors%}
+                                <div class="invalid-feedback">{{error}}</div>
+                                {%endfor%}
+                            {%else%}
+                        {% render_field Chiffrement_form.height_source class="form-control is-valid" %}
+                            {%endif%}
+                        {%else%}
+                        {% render_field Chiffrement_form.height_source class="form-control" %}
+                        {%endif%}
+                    </div>
+                    <div class="col-3"><label >Width :</label></div>
+                    <div class="col-3">
+                        {%if Chiffrement_form.is_bound%}
+                            {%if Chiffrement_form.width_source.errors%}
+                            {% render_field Chiffrement_form.width_source class="form-control is-invalid" %}
+                                {%for error in Chiffrement_form.width_source.errors%}
+                                <div class="invalid-feedback">{{error}}</div>
+                                {%endfor%}
+                            {%else%}
+                        {% render_field Chiffrement_form.width_source class="form-control is-valid" %}
+                            {%endif%}
+                        {%else%}
+                        {% render_field Chiffrement_form.width_source class="form-control" %}
+                        {%endif%}
+                    </div>
+                    </div>
+                    <div class=" mt-1 mb-3 p-2" id="btn-box-2">
+                        <button type="submit" class="btn btn-primary p-2" data-filter="resize" style="background-image: linear-gradient(to right,#F53844,#42378F); border-radius: 12px;
+                        color: #fff;"">Resize</button>
+                    </div>
+                </div>
+                    <div class="row text-center m-3 p-1" style="border: 0.5px #F0f0ff solid; background-image: linear-gradient(to right,#380036,#0CBABA); border-radius: 5px;
+                    color: #fff;"><h5>Image Texte</h5></div>
+                    <div class="row mt-3 p-1" style="border: 0.5px #F0f0ff solid;">
+                        <div class="col-4"><label >Le Text :</label></div>
+                    <div class="col-8">
+                        {%if Chiffrement_form.is_bound%}
+                            {%if Chiffrement_form.txt.errors%}
+                            {% render_field Chiffrement_form.txt class="form-control is-invalid" %}
+                                {%for error in Chiffrement_form.txt.errors%}
+                                <div class="invalid-feedback">{{error}}</div>
+                                {%endfor%}
+                            {%else%}
+                        {% render_field Chiffrement_form.txt class="form-control is-valid" %}
+                            {%endif%}
+                        {%else%}
+                        {% render_field Chiffrement_form.txt class="form-control" %}
+                        {%endif%}
+                    </div>
+                    </div>
+                    <div class="row mt-3 p-1" style="border: 0.5px #F0f0ff solid;">
+                        <div class="col-3"><label >Height :</label></div>
+                    <div class="col-3">
+                        {%if Chiffrement_form.is_bound%}
+                            {%if Chiffrement_form.height_txt.errors%}
+                            {% render_field Chiffrement_form.height_txt class="form-control is-invalid" %}
+                                {%for error in Chiffrement_form.height_txt.errors%}
+                                <div class="invalid-feedback">{{error}}</div>
+                                {%endfor%}
+                            {%else%}
+                        {% render_field Chiffrement_form.height_txt class="form-control is-valid" %}
+                            {%endif%}
+                        {%else%}
+                        {% render_field Chiffrement_form.height_txt class="form-control" %}
+                        {%endif%}
+                    </div>
+                    <div class="col-3"><label >Width :</label></div>
+                    <div class="col-3">
+                        {%if Chiffrement_form.is_bound%}
+                            {%if Chiffrement_form.width_txt.errors%}
+                            {% render_field Chiffrement_form.width_txt class="form-control is-invalid" %}
+                                {%for error in Chiffrement_form.width_txt.errors%}
+                                <div class="invalid-feedback">{{error}}</div>
+                                {%endfor%}
+                            {%else%}
+                        {% render_field Chiffrement_form.width_txt class="form-control is-valid" %}
+                            {%endif%}
+                        {%else%}
+                        {% render_field Chiffrement_form.width_txt class="form-control" %}
+                        {%endif%}
+                    </div>
+                    </div>
+                    <div class=" mt-1 mb-3 p-2" id="btn-box-3">
+                        <button type="submit" class="btn btn-primary p-2" data-filter="generer" style="background-image: linear-gradient(to right,#F53844,#42378F); border-radius: 12px;
+                        color: #fff;"">Génerer</button>
+                    </div>
+                    <div class="row mt-3 p-1" style="border: 0.5px #F0f0ff solid;">
+                        <div class="col-4"><label >Image text :</label></div>
+                    <div class="col-8">
+                        {%if Chiffrement_form.is_bound%}
+                            {%if Chiffrement_form.image_txt.errors%}
+                            {% render_field Chiffrement_form.image_txt class="form-control is-invalid" %}
+                                {%for error in Chiffrement_form.image_txt.errors%}
+                                <div class="invalid-feedback">{{error}}</div>
+                                {%endfor%}
+                            {%else%}
+                        {% render_field Chiffrement_form.image_txt class="form-control is-valid" %}
+                            {%endif%}
+                        {%else%}
+                        {% render_field Chiffrement_form.image_txt class="form-control" onchange="readURL_txt(this);" %}
+                        {%endif%}
+                    </div>
+                    </div>
+                    <div class="row p-2">
+                        <div id="img-box2"></div>
+                    </div>
+                    <div class="not-visible mt-1 mb-3" id="btn-box-4">
+                        <button type="submit" class="btn btn-primary" style="background-image: linear-gradient(to right,#F53844,#42378F); border-radius: 12px;
+                        color: #fff;" data-filter="chiffrer">Chiffrer</button>
+                    </div>
+                    <div class="row p-2">
+                        <div id="img-box3"></div>
+                    </div>
+                    <div class="not-visible-envoyer mt-1 mb-3" id="btn-box-5">
+                        <button type="submit" class="btn btn-primary" style="background-image: linear-gradient(to right,#F53844,#42378F); border-radius: 12px;
+                        color: #fff;" data-filter="envoyer">Envouyer</button>
+                    </div>
+                    
+                    
+
+            </div>
+            
+        </div>
+        <div class="col-2"></div>
+        <div class="col-5 card" style="min-height: 500px;">
+            <div class="text-center  mt-1"><img src="{% static 'images/user2.png' %}" width="100" height="100" ></div>
+            <h5>Dechiffrement</h5>
+            <div class="row p-2">
+                <div id="img-box4"></div>
+                <div class="not-visible-envoyer mt-1 mb-3" id="btn-box-6">
+                    <button type="submit" class="btn btn-primary" style="background-image: linear-gradient(to right,#F53844,#42378F); border-radius: 12px;
+                    color: #fff;" data-filter="dechiffrer">Dechiffrer</button>
+                </div>
+                <div id="img-box5"></div>
+            </div>
+        </div>
+    </form>
+
+    </div>
+
+</div>
+{% endblock %}
